@@ -10,7 +10,7 @@ GAMBLING_TAX = 2.00
 MIN_AGE = 18
 print()
 def main():                                                                                                   #functie:1
-    print("**************************    LET'S PLAY    ************************")
+    print("**************************     LET'S PLAY     ************************")
     print()
 #stap 1a vraag gebuikersgegevens op
     name = input("Wat is je naam? ").capitalize()
