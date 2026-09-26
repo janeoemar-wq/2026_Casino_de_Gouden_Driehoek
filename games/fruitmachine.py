@@ -1,15 +1,3 @@
-#_______________________________________________________________________________
-# stappenplan, programma verloop:
-
-
-#Funties:
-# functie 1: def determine_rolls
-# functie 2: def determine_payout
-# functie 3: def start
-# functie 4: def play_fruitmachine
-#-------------------------------------------------------------------------------
-
-
 def determine_rolls(round_number):                                                  #functie 1
     optie = round_number % 5
 

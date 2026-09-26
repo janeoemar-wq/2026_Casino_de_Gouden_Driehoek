@@ -58,7 +58,6 @@ def show_welcome_message(startbudget, balance, salutation):
         print(f"Je komt €{-balance:.2f} tekort.")
         return
 
-
     print("\nCasino de Gouden Driehoek")
     print("*" * 27)
     print(f"Welkom, {salutation}")

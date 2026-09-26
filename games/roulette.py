@@ -1,23 +1,3 @@
-#_______________________________________________________________________________
-# stappenplan, programma verloop:
-# laat gebruiker een keuze maken/ kleur kiezen
-# laat de gebruiker zijn inzet invoeren
-# BONUS: valideer of de gebruiker een geldige invoer heeft gegeven.
-# Vraag hoeveel de gebruiker wil inzetten en check of dat valide is
-# Als de inzet valide is, haal dit dan van de balance af.
-# Bepaal de kleur
-# Bereken of de gebruiker gewonnen of verloren heeft.
-# Printout of de gebruiker gewonnen of verloren heeft.
-# Vergeet niet om het rondenummer op te tellen, anders speel je elke ronde hetzelfde spel.
-# Print eindsaldo van de gebruiker
-
-#Funties:
-# functie 1: def show_options
-# functie 2: def get_stake
-# functie 3: def has_won
-# functie 4: def play_roulette
-#-------------------------------------------------------------------------------
-
 def show_options():                                                                           #functie 1
     print()
     print("Kies één van de volgende opties:")
