@@ -1,3 +1,4 @@
+#echt
 def determine_rolls(round_number):                                                  #functie 1
     optie = round_number % 5
 

@@ -1,15 +1,4 @@
-#_______________________________________________________________________________
-# stappenplan, programma verloop:
 
-#Funties:
-# functie 1: def play_blackjack
-# functie 2: def create _deck (met een list comprehension een deck maakt)
-# functie 3:
-# functie 4:
-#-------------------------------------------------------------------------------
-#Imports
-
-#constanten
 #Het blackjack spel werkt verder met lijsten voor:
 #
 # het deck
@@ -27,6 +16,7 @@
 # def calculate_card_value: bereken de waarde kaartern
 # def calculate_hand_value bereken de waarde kaarten van je hand
 # def play_blackjack
+#-----------------------------------------------
 import random
 
 SUITS = ["♠", "♥", "♦", "♣"]
@@ -50,7 +40,6 @@ def show_hand(label, hand, hide_card=False):
         visible_cards = hand
 
     print(f"{label}: {' | '.join(visible_cards)}")
-
 
 def calculate_card_value(card):
     rank = card[1:]
@@ -79,7 +68,7 @@ def calculate_hand_value(hand):
 
 
 def play_blackjack(balance):
-    print("\nCasino de Gouden Driehoek - Blackjack")
+    print("\n ♠ ♥ ♦ ♣ Casino de Gouden Driehoek - Blackjack ♠ ♥ ♦ ♣")
     print("--------------------------------------")
     print(f"Huidig saldo: €{balance:.2f}")
 

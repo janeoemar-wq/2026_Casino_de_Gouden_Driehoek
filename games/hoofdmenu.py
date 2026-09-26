@@ -1,4 +1,5 @@
-from games.Archief.testen_oud import test_fruitmachine
+#from games.Archief.testen_oud import test_fruitmachine
+from fruitmachine import play_fruitmachine
 from roulette import play_roulette
 from blackjack import play_blackjack
 
@@ -91,7 +92,9 @@ def show_main_menu(name, birthdate, salutation, balance):                       
                 print("Ongeldige keuze, probeer opnieuw.")
 
 #functie gemaakt voor games menu
-def show_games_menu(balance, salutation):                                                                    #functie: 6
+def show_games_menu(balance, salutation):
+    round_number = 0
+    #functie: 6
     while True:
         print("\n=== Spellen Menu ===")
         print("1. Fruitmachine")
@@ -103,7 +106,8 @@ def show_games_menu(balance, salutation):                                       
 
         match keuze:
             case "1":
-                balance = test_fruitmachine.start(balance)
+                balance = play_fruitmachine(balance, round_number)
+                round_number += 1
             case "2":
                 balance = play_roulette(balance)
             case "3":
