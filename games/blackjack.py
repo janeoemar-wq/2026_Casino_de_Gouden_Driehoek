@@ -68,98 +68,107 @@ def calculate_hand_value(hand):
 
 
 def play_blackjack(balance):
-    print("\n ♠ ♥ ♦ ♣ Casino de Gouden Driehoek - Blackjack ♠ ♥ ♦ ♣")
-    print("--------------------------------------")
-    print(f"Huidig saldo: €{balance:.2f}")
+    opnieuw = "1"
+    while opnieuw == "1":
 
-    try:
-        bet = float(input("Wat wil je inzetten? €"))
-    except ValueError:
-        print("Voer een geldig bedrag in.")
-        return balance
+        print("\n Casino de Gouden Driehoek - ♠ ♥ ♦ ♣   Blackjack   ♠ ♥ ♦ ♣")
+        print("--------------------------------------")
+        print(f"Huidig saldo: €{balance:.2f}")
 
-    if bet <= 0 or bet > balance:
-        print("Ongeldige inzet.")
-        return balance
-    print("Inzet geaccepteerd")
-
-    balance -= bet
-
-    deck = create_deck()
-
-    player_hand = []
-    dealer_hand = []
-
-    draw_card(deck, player_hand)
-    draw_card(deck, player_hand)
-
-    draw_card(deck, dealer_hand)
-    draw_card(deck, dealer_hand)
-
-    show_hand("Jouw hand", player_hand)
-    show_hand("Dealer toont", dealer_hand, True)
-
-    print(f"Jouw totaal: {calculate_hand_value(player_hand)}")
-
-    while calculate_hand_value(player_hand) < 21:
-
-        choice = input("\nKies hit of stand: ").lower()
-
-        if choice == "stand":
-            break
-
-        if choice != "hit":
-            print("Kies hit of stand.")
+        try:
+            bet = float(input("Wat wil je inzetten? €"))
+        except ValueError:
+            print("Voer een geldig bedrag in.")
             continue
 
-        card = draw_card(deck, player_hand)
+        if bet <= 0 or bet > balance:
+            print("Ongeldige inzet.")
+            continue
+        print("Inzet geaccepteerd")
 
-        print(f"Je trekt: {card}")
+        balance -= bet
+
+        deck = create_deck()
+
+        player_hand = []
+        dealer_hand = []
+
+        draw_card(deck, player_hand)
+        draw_card(deck, player_hand)
+
+        draw_card(deck, dealer_hand)
+        draw_card(deck, dealer_hand)
 
         show_hand("Jouw hand", player_hand)
+        show_hand("Dealer toont", dealer_hand, True)
 
+        print(f"Jouw totaal: {calculate_hand_value(player_hand)}")
+
+        while calculate_hand_value(player_hand) < 21:
+
+            choice = input("\nKies 1 = hit of 0 = stand: ")
+
+            if choice == "0":
+                break
+            if choice != "1":
+                print("Kies 1 voor Hit of 0 voor stand.")
+                continue
+
+            card = draw_card(deck, player_hand)
+
+            print(f"Je trekt: {card}")
+
+            show_hand("Jouw hand", player_hand)
+
+            player_total = calculate_hand_value(player_hand)
+
+            print(f"Jouw totaal: {player_total}")
         player_total = calculate_hand_value(player_hand)
-
-        print(f"Jouw totaal: {player_total}")
 
         if player_total > 21:
             print("Bust! Je bent boven de 21.")
             print(f"Nieuw saldo: €{balance:.2f}")
-            return balance
+            opnieuw = input ("\nWil je opnieuw spelen? Ja = 1, Nee = 0:")
+            if opnieuw == "0":
+                return balance #hiermee stop je de functie
+            continue           #hiermee ga je terug naar while opnieuw ==1
 
-    print("\nDealer is aan de beurt.")
-
-    show_hand("Dealer hand", dealer_hand)
-
-    while calculate_hand_value(dealer_hand) < 17:
-        card = draw_card(deck, dealer_hand)
-
-        print(f"Dealer trekt: {card}")
+        print("\nDealer is aan de beurt.")
 
         show_hand("Dealer hand", dealer_hand)
 
-    player_total = calculate_hand_value(player_hand)
-    dealer_total = calculate_hand_value(dealer_hand)
+        while calculate_hand_value(dealer_hand) < 17:
+            card = draw_card(deck, dealer_hand)
 
-    print(f"\nJouw totaal: {player_total}")
-    print(f"Dealer totaal: {dealer_total}")
+            print(f"Dealer trekt: {card}")
 
-    if dealer_total > 21:
-        print("Dealer bust! Je wint.")
-        balance += bet * 2
+            show_hand("Dealer hand", dealer_hand)
 
-    elif player_total > dealer_total:
-        print("Je wint van de dealer!")
-        balance += bet * 2
+        player_total = calculate_hand_value(player_hand)
+        dealer_total = calculate_hand_value(dealer_hand)
 
-    elif player_total == dealer_total:
-        print("Gelijkspel.")
-        balance += bet
+        print(f"\nJouw totaal: {player_total}")
+        print(f"Dealer totaal: {dealer_total}")
 
-    else:
-        print("Dealer wint.")
+        if dealer_total > 21:
+            print("Dealer bust! Je wint.")
+            balance += bet * 2
 
-    print(f"Nieuw saldo: €{balance:.2f}")
+        elif player_total > dealer_total:
+            print("Je wint van de dealer!")
+            balance += bet * 2
 
-    return balance
+        elif player_total == dealer_total:
+            print("Gelijkspel.")
+            balance += bet
+
+        else:
+            print("Dealer wint.")
+
+            print(f"Nieuw saldo: €{balance:.2f}")
+
+            opnieuw = input("\nOpnieuw spelen? Ja = 1, Nee = 0: ")
+
+            if opnieuw == "0":
+                return balance
 

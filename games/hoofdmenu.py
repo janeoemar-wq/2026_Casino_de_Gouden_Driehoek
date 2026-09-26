@@ -3,6 +3,7 @@ from fruitmachine import play_fruitmachine
 from roulette import play_roulette
 from blackjack import play_blackjack
 
+
 TICKET_PRICE = 10.00
 CONSUMPTION_PRICE = 4.50
 GAMBLING_TAX = 2.00
