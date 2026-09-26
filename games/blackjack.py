@@ -1,0 +1,176 @@
+#_______________________________________________________________________________
+# stappenplan, programma verloop:
+
+#Funties:
+# functie 1: def play_blackjack
+# functie 2: def create _deck (met een list comprehension een deck maakt)
+# functie 3:
+# functie 4:
+#-------------------------------------------------------------------------------
+#Imports
+
+#constanten
+#Het blackjack spel werkt verder met lijsten voor:
+#
+# het deck
+# de hand van de speler
+# de hand van de dealer
+#-------------------
+#Je maakt minstens 1 keer gebruik van list comprehension om het deck te maken vanuit de constanten "suits" en "ranks"
+# (lukt dat niet, dan mag een for-loop ook).
+#minstens 1 keer gebruik van slicing op een lijst.
+
+# functies:
+# def create_deck():maak een deck aan van 52 kaarten
+# def draw_card: trek een kaart
+# def show_hand: laat je kaarten zien
+# def calculate_card_value: bereken de waarde kaartern
+# def calculate_hand_value bereken de waarde kaarten van je hand
+# def play_blackjack
+import random
+
+SUITS = ["♠", "♥", "♦", "♣"]
+RANKS = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]
+
+
+def create_deck():
+    deck = [f"{suit}{rank}" for suit in SUITS for rank in RANKS]
+    random.shuffle(deck)
+    return deck
+
+def draw_card(deck, hand):
+    card = deck.pop()
+    hand.append(card)
+    return card
+
+def show_hand(label, hand, hide_card=False):
+    if hide_card:
+        visible_cards = hand[:1] + ["??"]
+    else:
+        visible_cards = hand
+
+    print(f"{label}: {' | '.join(visible_cards)}")
+
+
+def calculate_card_value(card):
+    rank = card[1:]
+
+    if rank in ["J", "Q", "K"]:
+        return 10
+    elif rank == "A":
+        return 11
+    else:
+        return int(rank)
+
+def calculate_hand_value(hand):
+    total = 0
+    number_of_aces = 0
+
+    for card in hand:
+        total += calculate_card_value(card)
+        if card[1:] == "A":
+            number_of_aces += 1
+
+    while total > 21 and number_of_aces > 0:
+        total -= 10
+        number_of_aces -= 1
+
+    return total
+
+
+def play_blackjack(balance):
+    print("\nCasino de Gouden Driehoek - Blackjack")
+    print("--------------------------------------")
+    print(f"Huidig saldo: €{balance:.2f}")
+
+    try:
+        bet = float(input("Wat wil je inzetten? €"))
+    except ValueError:
+        print("Voer een geldig bedrag in.")
+        return balance
+
+    if bet <= 0 or bet > balance:
+        print("Ongeldige inzet.")
+        return balance
+    print("Inzet geaccepteerd")
+
+    balance -= bet
+
+    deck = create_deck()
+
+    player_hand = []
+    dealer_hand = []
+
+    draw_card(deck, player_hand)
+    draw_card(deck, player_hand)
+
+    draw_card(deck, dealer_hand)
+    draw_card(deck, dealer_hand)
+
+    show_hand("Jouw hand", player_hand)
+    show_hand("Dealer toont", dealer_hand, True)
+
+    print(f"Jouw totaal: {calculate_hand_value(player_hand)}")
+
+    while calculate_hand_value(player_hand) < 21:
+
+        choice = input("\nKies hit of stand: ").lower()
+
+        if choice == "stand":
+            break
+
+        if choice != "hit":
+            print("Kies hit of stand.")
+            continue
+
+        card = draw_card(deck, player_hand)
+
+        print(f"Je trekt: {card}")
+
+        show_hand("Jouw hand", player_hand)
+
+        player_total = calculate_hand_value(player_hand)
+
+        print(f"Jouw totaal: {player_total}")
+
+        if player_total > 21:
+            print("Bust! Je bent boven de 21.")
+            print(f"Nieuw saldo: €{balance:.2f}")
+            return balance
+
+    print("\nDealer is aan de beurt.")
+
+    show_hand("Dealer hand", dealer_hand)
+
+    while calculate_hand_value(dealer_hand) < 17:
+        card = draw_card(deck, dealer_hand)
+
+        print(f"Dealer trekt: {card}")
+
+        show_hand("Dealer hand", dealer_hand)
+
+    player_total = calculate_hand_value(player_hand)
+    dealer_total = calculate_hand_value(dealer_hand)
+
+    print(f"\nJouw totaal: {player_total}")
+    print(f"Dealer totaal: {dealer_total}")
+
+    if dealer_total > 21:
+        print("Dealer bust! Je wint.")
+        balance += bet * 2
+
+    elif player_total > dealer_total:
+        print("Je wint van de dealer!")
+        balance += bet * 2
+
+    elif player_total == dealer_total:
+        print("Gelijkspel.")
+        balance += bet
+
+    else:
+        print("Dealer wint.")
+
+    print(f"Nieuw saldo: €{balance:.2f}")
+
+    return balance
+
