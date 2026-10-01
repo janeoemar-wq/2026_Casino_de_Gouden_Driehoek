@@ -77,7 +77,8 @@ def initialize_player(total_cost):
     global players
     global current_player
 
-    players = create_start_players()
+    if not players:
+        players = create_start_players()
 
     name = input("Wat is je naam? ").capitalize()
 
@@ -291,11 +292,13 @@ def remove_account():
     del players[name]
 
     if name == current_player:
-        current_player = list(
-        players.keys()
-        )[0]
+        current_player = None
+        print("Account verwijderd.")
+        print("🔒 Je bent uitgelogd.")
+        return True #de huidige gebruiker is verwijderd, opnieuw inloggen
 
     print("Account verwijderd.")
+    return False #  bv:Als ik Frank verwijdert terwijl Jane actief is:  Nee.. huidige speler bestaat nog. Blijf gewoon in het accountmenu.
 
 
 

@@ -32,6 +32,7 @@ CONSUMPTION_PRICE = 4.50
 GAMBLING_TAX = 2.00
 MIN_AGE = 18
 print()
+
 def main():                                                                                                   #functie:1
     print("**************************     LET'S PLAY     ************************")
     print()
@@ -46,7 +47,11 @@ def main():                                                                     
     if toegang is False:  # 🟨 NIEUW
         return
 
-    show_main_menu()
+    opnieuw_inloggen = show_main_menu()
+
+    if opnieuw_inloggen:
+        print("\n🔐 Kies opnieuw een account.")
+        initialize_player(total_cost)
                                                                           #functie:2
 #functie gemaakt voor welkoms bericht                                                                         #functie:4
 def show_welcome_message(startbudget, balance, salutation):
@@ -82,7 +87,9 @@ def show_main_menu():                                                     #funct
                 balance = get_current_balance()
                 show_balance(balance)
             case "3":
-                show_account_menu()
+                uitgelogd = show_account_menu()
+                if uitgelogd:
+                    return True
             case "0":
                 print("Programma wordt afgesloten...")
                 break
@@ -156,7 +163,9 @@ def show_account_menu():
                 switch_account()
 
             case "4":
-                remove_account()
+                uitgelogd = remove_account()
+                if uitgelogd:
+                    return True
 
             case "0":
                 break
