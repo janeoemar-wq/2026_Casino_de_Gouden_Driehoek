@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta # om een uur bij te tellen
 MIN_AGE = 18
 players = {}
 current_player = None
@@ -31,13 +31,15 @@ def get_age(birthdate):
 def check_age(age):
     return age >= MIN_AGE
 
-def create_profile(name, birthdate, gender, balance):
+def create_profile(name, birthdate, gender, balance, password):
     return {
         "naam": name,
         "geboortedatum": birthdate,
         "gender": gender,
         "saldo": balance,
-        "gespeelde_spellen": {}
+        "gespeelde_spellen": {},
+        "wachtwoord": password,
+        "geblokkeerd tot": None
     }
 def create_start_players():
     return {
@@ -46,7 +48,9 @@ def create_start_players():
             "geboortedatum": "20-04-1971",
             "gender": "v",
             "saldo": 500.00,
-            "gespeelde_spellen": {}
+            "gespeelde_spellen": {},
+            "wachtwoord": "jane123",
+            "geblokkeerd_tot": None
         },
 
         "Frank": {
@@ -54,7 +58,9 @@ def create_start_players():
             "geboortedatum": "12-03-1971",
             "gender": "m",
             "saldo": 500.00,
-            "gespeelde_spellen": {}
+            "gespeelde_spellen": {},
+            "wachtwoord": "frank123",
+            "geblokkeerd_tot": None
         },
 
         "Jade": {
@@ -63,6 +69,8 @@ def create_start_players():
             "gender": "m",
             "saldo": 500.00,
             "gespeelde_spellen": {},
+            "wachtwoord": "jade123",
+            "geblokkeerd_tot": None
         }
     }
 def initialize_player(total_cost):
@@ -78,6 +86,28 @@ def initialize_player(total_cost):
     if name in players:
 
         profile = players[current_player]
+        if profile["geblokkeerd_tot"] is not None:
+            if datetime.now() < profile["geblokkeerd_tot"]:
+                print("🔒 Dit account is tijdelijk geblokkeerd.")
+                return False
+
+        profile["geblokkeerd_tot"] = None
+        for poging in range(3):
+            password = input("Voer je wachtwoord in: ")
+
+            if password == profile["wachtwoord"]:
+                break
+
+            resterend = 2 - poging
+            print("❌ Onjuist wachtwoord.")
+
+            if resterend > 0:
+                print(f"Je hebt nog {resterend} poging(en).")
+
+        else:
+            profile["geblokkeerd_tot"] = datetime.now() + timedelta(hours=1)
+            print("🔒 Te veel foute pogingen. Account is 1 uur geblokkeerd.")
+            return False
 
         salutation = determine_salutation(
             current_player,
@@ -145,6 +175,7 @@ def create_account(total_cost, name=None):
     gender = input(
         "Wat is je gender? (m/v/x) "
     ).lower()
+    password = input("Kies een wachtwoord: ")
 
     startbudget = float(
         input("Hoeveel geld neem je mee? €")
@@ -156,7 +187,8 @@ def create_account(total_cost, name=None):
         name,
         birthdate,
         gender,
-        balance
+        balance,
+        password
     )
 
     current_player = name
@@ -226,10 +258,18 @@ def switch_account():
     if name not in players:
         print("❌ Dit account bestaat niet.")
         return
+    profile = players[name]
+
+    password = input("Voer het wachtwoord van dit account in: ")
+
+    if password != profile["wachtwoord"]:
+        print("❌ Onjuist wachtwoord. Account niet gewisseld.")
+        return  # 🟨 NIEUW
 
     current_player = name
 
     print(f"Ingelogd als {name}")
+
 
 def remove_account():
     global current_player
