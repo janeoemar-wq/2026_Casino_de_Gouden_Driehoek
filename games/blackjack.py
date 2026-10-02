@@ -66,8 +66,7 @@ def calculate_hand_value(hand):
 
     return total
 
-
-def play_blackjack(balance):
+def play_blackjack(balance:float):
     opnieuw = "1"
     while opnieuw == "1":
 
@@ -171,4 +170,4 @@ def play_blackjack(balance):
 
         if opnieuw == "0":
             return balance
-
+    return balance

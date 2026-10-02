@@ -45,7 +45,7 @@ emojij_lijst = {
     "citroen": "🍋",
     "ster": "⭐"}
 
-def play_fruitmachine(balance, round_number):                              #functie 4
+def play_fruitmachine(balance: float, round_number):                              #functie 4
     print(f"Je huidige saldo is €{balance:.2f}")
     inzet = float(input("Wat wil je inzetten? €"))
 # inzet valideren

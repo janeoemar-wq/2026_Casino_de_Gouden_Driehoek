@@ -92,7 +92,8 @@ def initialize_player(total_cost):
                 print("🔒 Dit account is tijdelijk geblokkeerd.")
                 return False
 
-        profile["geblokkeerd_tot"] = None
+        profile["geblokkeerd_tot":] = None
+
         for poging in range(3):
             password = input("Voer je wachtwoord in: ")
 
@@ -265,7 +266,7 @@ def switch_account():
 
     if password != profile["wachtwoord"]:
         print("❌ Onjuist wachtwoord. Account niet gewisseld.")
-        return  # 🟨 NIEUW
+        return
 
     current_player = name
 
@@ -281,13 +282,13 @@ def remove_account():
 
     if name not in players:
         print("Dit account bestaat niet.")
-        return
+        return False
 
     if len(players) == 1:
         print(
             "Laatste account mag niet verwijderd worden."
     )
-        return
+        return False
 
     del players[name]
 
@@ -298,7 +299,8 @@ def remove_account():
         return True #de huidige gebruiker is verwijderd, opnieuw inloggen
 
     print("Account verwijderd.")
-    return False #  bv:Als ik Frank verwijdert terwijl Jane actief is:  Nee.. huidige speler bestaat nog. Blijf gewoon in het accountmenu.
+    return False #  bv:Als ik Frank verwijdert terwijl Jane actief is:  Nee..
+    # huidige speler bestaat nog. Blijf gewoon in het accountmenu.
 
 
 

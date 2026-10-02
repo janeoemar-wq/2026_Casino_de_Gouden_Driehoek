@@ -33,7 +33,7 @@ GAMBLING_TAX = 2.00
 MIN_AGE = 18
 print()
 
-def main():                                                                                                   #functie:1
+def main():
     print("**************************     LET'S PLAY     ************************")
     print()
 
@@ -44,33 +44,22 @@ def main():                                                                     
     )
 
     toegang = initialize_player(total_cost)
-    if toegang is False:  # 🟨 NIEUW
+    if toegang is False:
         return
 
-    opnieuw_inloggen = show_main_menu()
 
-    if opnieuw_inloggen:
-        print("\n🔐 Kies opnieuw een account.")
-        initialize_player(total_cost)
-                                                                          #functie:2
-#functie gemaakt voor welkoms bericht                                                                         #functie:4
-def show_welcome_message(startbudget, balance, salutation):
-    total = TICKET_PRICE + CONSUMPTION_PRICE + GAMBLING_TAX
-    if balance < 0:
-        print("\nOnvoldoende budget om het casino te betreden.")
-        print(f"Je komt €{-balance:.2f} tekort.")
-        return
+    while True:
+        opnieuw_inloggen = show_main_menu()
 
-    print("\nCasino de Gouden Driehoek")
-    print("*" * 27)
-    print(f"Welkom, {salutation}")
-    print()
-    print(f"Startbudget:    € {startbudget:.2f}")
-    print(f"Vaste kosten:   € {total:.2f}")
-    print(f"Saldo:          € {balance:.2f}")
-    print()
-#functie gemaakt voor hoofdmenu
-def show_main_menu():                                                     #functie:5
+        if opnieuw_inloggen:
+            print("\n🔐 Kies opnieuw een account.")
+            toegang = initialize_player(total_cost)
+            if toegang is False:
+                return
+        else:
+            break
+
+def show_main_menu():
     while True:
         print("\n=== Hoofdmenu ===")
         print("1. Spellen")
@@ -96,7 +85,6 @@ def show_main_menu():                                                     #funct
             case _:
                 print("Ongeldige keuze, probeer opnieuw.")
 
-#functie gemaakt voor games menu
 def show_games_menu():
     round_number = 0
     while True:
@@ -132,8 +120,8 @@ def show_games_menu():
                     return
                 case _:
                     print("Ongeldige keuze, probeer opnieuw.")
-#functie gemaakt voor saldo
-def show_balance(balance):                                                                                   #functie: 7
+
+def show_balance(balance):
     print(f"\nJe huidige saldo is: €{balance:.2f}")
 
 def show_account_menu():
