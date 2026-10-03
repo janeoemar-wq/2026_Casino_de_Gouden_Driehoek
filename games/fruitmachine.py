@@ -23,8 +23,8 @@ def determine_payout(rol1, rol2, rol3, inzet):                               #fu
 
 def start(balance):                                                                            #functie 3
     print("=== Winregels Fruitmachine ===")
-    print("→ Grote prijs (3x inzet) 🍒🍒🍒 | 🍋🍋🍋 | ⭐⭐⭐")
-    print("→ Kleine prijs (inzet terug) 🍒🍒❓ | 🍋❓🍋 | ⭐❓⭐")
+    print("→ Grote prijs (3x inzet) 🍒🍒🍒  | 🍋🍋🍋  | ⭐⭐⭐")
+    print("→ Kleine prijs (inzet terug) 🍒🍒❓  | 🍋❓🍋  | ⭐❓⭐")
     print("→ Geen prijs (inzet kwijt) 🍒🍋⭐")
     print("==============================")
     round_number = 0
@@ -45,7 +45,7 @@ emojij_lijst = {
     "citroen": "🍋",
     "ster": "⭐"}
 
-def play_fruitmachine(balance, round_number):                              #functie 4
+def play_fruitmachine(balance: float, round_number):                              #functie 4
     print(f"Je huidige saldo is €{balance:.2f}")
     inzet = float(input("Wat wil je inzetten? €"))
 # inzet valideren
