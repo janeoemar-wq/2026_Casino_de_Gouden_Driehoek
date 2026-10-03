@@ -1,5 +1,12 @@
-#echt
-def determine_rolls(round_number):                                                  #functie 1
+"""
+*************************m     FUNCTIES IN FRUITMACHINE
+def determine_rolls(round_number)
+def determine_payout(rol1, rol2, rol3, inzet)
+def start(balance)
+def play_fruitmachine(balance, round_number)
+"""
+
+def determine_rolls(round_number):
     optie = round_number % 5
 
     if optie == 0:
@@ -13,7 +20,7 @@ def determine_rolls(round_number):                                              
     else:
         return "ster", "ster", "ster"
 
-def determine_payout(rol1, rol2, rol3, inzet):                               #functie 2
+def determine_payout(rol1, rol2, rol3, inzet):
     if rol1 == rol2 == rol3:
         return inzet * 3
     elif rol1 == rol2 or rol1 == rol3 or rol2 == rol3:
@@ -21,7 +28,7 @@ def determine_payout(rol1, rol2, rol3, inzet):                               #fu
     else:
         return 0
 
-def start(balance):                                                                            #functie 3
+def start(balance):
     print("=== Winregels Fruitmachine ===")
     print("→ Grote prijs (3x inzet) 🍒🍒🍒  | 🍋🍋🍋  | ⭐⭐⭐")
     print("→ Kleine prijs (inzet terug) 🍒🍒❓  | 🍋❓🍋  | ⭐❓⭐")
@@ -45,7 +52,7 @@ emojij_lijst = {
     "citroen": "🍋",
     "ster": "⭐"}
 
-def play_fruitmachine(balance: float, round_number):                              #functie 4
+def play_fruitmachine(balance: float, round_number):
     print(f"Je huidige saldo is €{balance:.2f}")
     inzet = float(input("Wat wil je inzetten? €"))
 # inzet valideren

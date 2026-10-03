@@ -1,10 +1,27 @@
-from datetime import datetime, timedelta # om een uur bij te tellen
+
+"""FUNCTIES IN PROFILES
+def determine_salutation(name, gender)
+def get_age(birthdate)
+def check_age(age)
+def create_profile(...)
+def create_start_players()
+def initialize_player(total_cost)
+def create_account(total_cost, name=None)
+def get_current_balance()
+def update_current_balance(balance)
+def register_played_game(game_name)
+def show_account()
+def show_all_players()
+def switch_account()
+def remove_account()
+
+"""
+
+from datetime import datetime, timedelta # om een uur bij te tellen(stond niet in de bonusvraag maar vond het wel leuk)
 MIN_AGE = 18
 players = {}
 current_player = None
 
-
-#functie voor bepalen begroeting ( uit main)                                                                   #functie:
 def determine_salutation(name, gender):
     if gender == "m":
         return f"meneer {name}"
@@ -16,12 +33,12 @@ def determine_salutation(name, gender):
 def get_age(birthdate):
     try:
         birth_date = datetime.strptime(birthdate, "%d-%m-%Y")
-        today = datetime.today()  # 🟨 NIEUW
+        today = datetime.today()
 
-        age = today.year - birth_date.year  # 🟨 AANGEPAST
+        age = today.year - birth_date.year
 
-        if (today.month, today.day) < (birth_date.month, birth_date.day):  # 🟨 NIEUW
-            age -= 1  # 🟨 NIEUW
+        if (today.month, today.day) < (birth_date.month, birth_date.day):
+            age -= 1
 
         return age
 
@@ -93,7 +110,7 @@ def initialize_player(total_cost):
                 return False
 
         profile["geblokkeerd_tot":] = None
-
+# stond niet in de opdracht, maar vond het wel leuk om te doen
         for poging in range(3):
             password = input("Voer je wachtwoord in: ")
 
@@ -299,8 +316,8 @@ def remove_account():
         return True #de huidige gebruiker is verwijderd, opnieuw inloggen
 
     print("Account verwijderd.")
-    return False #  bv:Als ik Frank verwijdert terwijl Jane actief is:  Nee..
-    # huidige speler bestaat nog. Blijf gewoon in het accountmenu.
+    return False #  bv:Als ik Frank verwijder terwijl Jane actief nog is.
+    # huidige speler blijft gewoon in het accountmenu.
 
 
 

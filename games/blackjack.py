@@ -1,21 +1,12 @@
-
-#Het blackjack spel werkt verder met lijsten voor:
-#
-# het deck
-# de hand van de speler
-# de hand van de dealer
-#-------------------
-#Je maakt minstens 1 keer gebruik van list comprehension om het deck te maken vanuit de constanten "suits" en "ranks"
-# (lukt dat niet, dan mag een for-loop ook).
-#minstens 1 keer gebruik van slicing op een lijst.
-
-# functies:
-# def create_deck():maak een deck aan van 52 kaarten
-# def draw_card: trek een kaart
-# def show_hand: laat je kaarten zien
-# def calculate_card_value: bereken de waarde kaartern
-# def calculate_hand_value bereken de waarde kaarten van je hand
-# def play_blackjack
+"""
+****************    FUNCTIES IN BLACKJACK:
+def create_deck():maak een deck aan van 52 kaarten
+def draw_card: trek een kaart
+def show_hand: laat je kaarten zien
+def calculate_card_value: bereken de waarde kaartern
+def calculate_hand_value bereken de waarde kaarten van je hand
+def play_blackjack
+"""
 #-----------------------------------------------
 import random
 
