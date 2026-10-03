@@ -1,4 +1,13 @@
-def show_options():                                                                           #functie 1
+"""
+********************     FUNCTIES IN ROULETTE
+def show_options():
+def get_stake(balance):
+def has_won(choice, color, odd_even)
+def play_roulette(balance)
+"""
+
+
+def show_options():
     print()
     print("Kies één van de volgende opties:")
     print("1. Rood")
@@ -8,7 +17,7 @@ def show_options():                                                             
     print("0. Stop")
     print()
 
-def get_stake(balance):                                                                       #functie 2
+def get_stake(balance):
     while True:
         stake = float(input("Hoeveel wil je inzetten? € "))
         if stake <= 0:
@@ -18,7 +27,7 @@ def get_stake(balance):                                                         
         else:
             return stake
 
-def has_won(choice, color, odd_even):                             # functie 3
+def has_won(choice, color, odd_even):
     if choice == 1 and color == "rood":
         return True
     elif choice == 2 and color == "zwart":
@@ -29,7 +38,7 @@ def has_won(choice, color, odd_even):                             # functie 3
         return True
     return False
 
-def play_roulette(balance):                                                        #functie : 4
+def play_roulette(balance):
     round_number = 1
     while True:
         show_options()
