@@ -1,5 +1,5 @@
 """
-verplaatst  naar profile:
+***************     VERPLAATST NAAR PROFILE:
 MIN_AGE = 18
 def get_age(birthdate):
 day, month, year = birthdate.split("-")
@@ -7,11 +7,17 @@ age = 2026 - int(year)
 return age
 initialize_player()
 
-verwijderd:
-def show_welcome_message(startbudget, balance, salutation): =
-
+**************      FUNCTIES IN HOOFDMENU
+def main()
+def show_main_menu()
+def show_games_menu()
+def show_balance(balance)
+def show_account_menu()
+verwijderd: def show_welcome_message(startbudget, balance, salutation)
 """
 
+
+# IMPORTS
 from fruitmachine import play_fruitmachine
 from roulette import play_roulette
 from blackjack import play_blackjack
@@ -34,7 +40,7 @@ MIN_AGE = 18
 print()
 
 def main():
-    print("**************************     LET'S PLAY     ************************")
+    print("**********     CASINO DE GOUDEN DRIEHOEK     ************")
     print()
 
     total_cost = (
@@ -61,7 +67,7 @@ def main():
 
 def show_main_menu():
     while True:
-        print("\n=== Hoofdmenu ===")
+        print("\n*************************     HOOFDMENU     *************************")
         print("1. Spellen")
         print("2. Saldo")
         print("3. Account")
@@ -88,7 +94,7 @@ def show_main_menu():
 def show_games_menu():
     round_number = 0
     while True:
-        print("\n=== Spellen Menu ===")
+        print("\n**********     SPELLEN MENU     **********")
         print("1. Fruitmachine")
         print("2. Roulette")
         print("3. Blackjack")
