@@ -1,23 +1,8 @@
 
-"""FUNCTIES IN PROFILES
-def determine_salutation(name, gender)
-def get_age(birthdate)
-def check_age(age)
-def create_profile(...)
-def create_start_players()
-def initialize_player(total_cost)
-def create_account(total_cost, name=None)
-def get_current_balance()
-def update_current_balance(balance)
-def register_played_game(game_name)
-def show_account()
-def show_all_players()
-def switch_account()
-def remove_account()
-
+"""FUNCTIES IN PROFILES week 6
+from datetime import datetime, timedelta vervangen door from datetime import datetime, timedelta, date
 """
-
-from datetime import datetime, timedelta # om een uur bij te tellen(stond niet in de bonusvraag maar vond het wel leuk)
+from datetime import datetime, timedelta, date
 MIN_AGE = 18
 players = {}
 current_player = None
@@ -32,12 +17,22 @@ def determine_salutation(name, gender):
 
 def get_age(birthdate):
     try:
-        birth_date = datetime.strptime(birthdate, "%d-%m-%Y")
-        today = datetime.today()
+        birthdate_value = datetime.strptime(
+            birthdate,
+            "%d-%m-%Y"
+        ).date()
+        today_value = date.today()
 
-        age = today.year - birth_date.year
-
-        if (today.month, today.day) < (birth_date.month, birth_date.day):
+        age = today_value.year - birthdate_value.year
+        if birthdate_value > today_value:
+            raise ValueError("Geboortedatum mag niet in de toekomst liggen.")
+        if (
+            today_value.month,
+            today_value.day
+        ) < (
+            birthdate_value.month,
+            birthdate_value.day
+        ):
             age -= 1
 
         return age
@@ -61,12 +56,12 @@ def create_profile(name, birthdate, gender, balance, password):
 def create_start_players():
     return {
         "Jane": {
-            "naam": "Jane",
+            "naam": "J",
             "geboortedatum": "20-04-1971",
             "gender": "v",
             "saldo": 500.00,
             "gespeelde_spellen": {},
-            "wachtwoord": "jane123",
+            "wachtwoord": "123",
             "geblokkeerd_tot": None
         },
 
@@ -214,10 +209,10 @@ def create_account(total_cost, name=None):
 
     print(f"Account voor {name} aangemaakt.")
 
-def get_current_balance():
+def get_current_balance():# HELPERFUNCTIE
     return players[current_player]["saldo"]
 
-def update_current_balance(balance):
+def update_current_balance(balance):# HELPERFUNCTIE
     players[current_player]["saldo"] = balance
 
 def register_played_game(game_name):
@@ -262,7 +257,7 @@ def show_all_players():
 
     print("\nAlle spelers")
 
-    for name, profile in players.items():
+    for name, profile in players.items(): #verwijst naar de sleutel-waardeparen van de dictionary players
 
         print(
             f"- {name}: €{profile['saldo']:.2f}"

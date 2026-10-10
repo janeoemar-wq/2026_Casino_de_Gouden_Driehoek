@@ -1,14 +1,12 @@
 """
-****************    FUNCTIES IN BLACKJACK:
-def create_deck():maak een deck aan van 52 kaarten
-def draw_card: trek een kaart
-def show_hand: laat je kaarten zien
-def calculate_card_value: bereken de waarde kaartern
-def calculate_hand_value bereken de waarde kaarten van je hand
-def play_blackjack
+print vervangen door console.print
+huidige saldo vervangen
 """
-#-----------------------------------------------
 import random
+
+from rich.console import Console
+from rich.panel import Panel
+console = Console()
 
 SUITS = ["♠", "♥", "♦", "♣"]
 RANKS = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]
@@ -30,7 +28,16 @@ def show_hand(label, hand, hide_card=False):
     else:
         visible_cards = hand
 
-    print(f"{label}: {' | '.join(visible_cards)}")
+    console.print(
+        Panel(
+            "|".join(visible_cards),
+            title=label,
+            border_style="cyan",
+            width=50
+        )
+    )
+
+
 
 def calculate_card_value(card):
     rank = card[1:]
@@ -60,23 +67,27 @@ def calculate_hand_value(hand):
 def play_blackjack(balance:float):
     opnieuw = "1"
     while opnieuw == "1":
-
-        print("\n Casino de Gouden Driehoek - ♠ ♥ ♦ ♣   Blackjack   ♠ ♥ ♦ ♣")
-        print("--------------------------------------")
-        print(f"Huidig saldo: €{balance:.2f}")
+        console.print(
+            Panel(
+                "[bold red]♠ ♥ ♦ ♣ BLACKJACK ♠ ♥ ♦ ♣[/bold red]",
+                title="[bold yellow]CASINO DE GOUDEN DRIEHOEK[/bold yellow]",
+                border_style="yellow",
+                width=50
+            )
+        )
 
         try:
-            bet = float(input("Wat wil je inzetten? €"))
+            bet = float(console.input("[bold cyan]Wat wil je inzetten? €[/bold cyan]"))
         except ValueError:
-            print("Voer een geldig bedrag in.")
+            console.print("[bold red]Voer een geldig bedrag in.[/bold red]")
             continue
 
         if bet <= 0 or bet > balance:
-            print("Ongeldige inzet.")
+            console.print("[bold red]Ongeldige inzet.[/bold red]")
             continue
-        print("Inzet geaccepteerd")
-
+        console.print("[bold green]✓ Inzet geaccepteerd[/bold green]")
         balance -= bet
+
 
         deck = create_deck()
 
@@ -92,73 +103,80 @@ def play_blackjack(balance:float):
         show_hand("Jouw hand", player_hand)
         show_hand("Dealer toont", dealer_hand, True)
 
-        print(f"Jouw totaal: {calculate_hand_value(player_hand)}")
+        console.print(f"[bold yellow]Jouw totaal: {calculate_hand_value(player_hand)}[/bold yellow]")
 
         while calculate_hand_value(player_hand) < 21:
 
-            choice = input("\nKies 1 = hit of 0 = stand: ")
+            choice = console.input("\n[bold cyan]Kies 1 = hit of 0 = stand: [/bold cyan]")
 
             if choice == "0":
                 break
             if choice != "1":
-                print("Kies 1 voor Hit of 0 voor stand.")
+                console.print("[bold red]Kies 1 voor Hit of 0 voor stand.[/bold red]")
                 continue
 
             card = draw_card(deck, player_hand)
-
-            print(f"Je trekt: {card}")
+            console.print(f"[bold cyan]Je trekt: {card}[/bold cyan]")
 
             show_hand("Jouw hand", player_hand)
 
             player_total = calculate_hand_value(player_hand)
 
-            print(f"Jouw totaal: {player_total}")
+            console.print(f"[bold yellow]Jouw totaal: {player_total}[/bold yellow]")
         player_total = calculate_hand_value(player_hand)
 
         if player_total > 21:
-            print("Bust! Je bent boven de 21.")
-            print(f"Nieuw saldo: €{balance:.2f}")
-            opnieuw = input ("\nWil je opnieuw spelen? Ja = 1, Nee = 0:")
+            console.print(
+                Panel(
+                    f"[bold red]Bust! Je bent boven de 21.[/bold red]\n\n"
+                    f"[bold cyan]Nieuw saldo: €{balance:.2f}[/bold cyan]",
+                    title="Output",
+                    border_style="red",
+                    width=50
+                )
+            )
+            opnieuw = console.input("\n[bold cyan]Opnieuw spelen? Ja = 1, Nee = 0: [/bold cyan]")
             if opnieuw == "0":
                 return balance #hiermee stop je de functie
             continue           #hiermee ga je terug naar while opnieuw ==1
 
-        print("\nDealer is aan de beurt.")
+        console.print("\n[bold cyan]Dealer is aan de beurt.[/bold cyan]")
 
         show_hand("Dealer hand", dealer_hand)
 
-        while calculate_hand_value(dealer_hand) < 17:
-            card = draw_card(deck, dealer_hand)
+    while calculate_hand_value(dealer_hand) < 17:
+        card = draw_card(deck, dealer_hand)
 
-            print(f"Dealer trekt: {card}")
+        console.print(f"[bold cyan]Dealer trekt: {card}[/bold cyan]")
 
-            show_hand("Dealer hand", dealer_hand)
+        show_hand("Dealer hand", dealer_hand)
 
-        player_total = calculate_hand_value(player_hand)
-        dealer_total = calculate_hand_value(dealer_hand)
+    player_total = calculate_hand_value(player_hand)
+    dealer_total = calculate_hand_value(dealer_hand)
 
-        print(f"\nJouw totaal: {player_total}")
-        print(f"Dealer totaal: {dealer_total}")
+    console.print(f"\n[bold yellow]Jouw totaal: {player_total}[/bold yellow]")
+    console.print(f"[bold yellow]Dealer totaal: {dealer_total}[/bold yellow]")
 
-        if dealer_total > 21:
-            print("Dealer bust! Je wint.")
-            balance += bet * 2
+    if dealer_total > 21:
+        console.print("[bold green]Dealer bust! Je wint.[/bold green]")
+        balance += bet * 2
 
-        elif player_total > dealer_total:
-            print("Je wint van de dealer!")
-            balance += bet * 2
+    elif player_total > dealer_total:
+        console.print("[bold green]Je wint van de dealer![/bold green]")
+        balance += bet * 2
 
-        elif player_total == dealer_total:
-            print("Gelijkspel.")
-            balance += bet
+    elif player_total == dealer_total:
+        console.print("[bold yellow]Gelijkspel.[/bold yellow]")
+        balance += bet
 
-        else:
-            print("Dealer wint.")
+    else:
+        console.print("[bold red]Dealer wint.[/bold red]")
 
-        print(f"Nieuw saldo: €{balance:.2f}")
+    console.print(f"[bold green]Nieuw saldo: €{balance:.2f}[/bold green]")
 
-        opnieuw = input("\nOpnieuw spelen? Ja = 1, Nee = 0: ")
+    opnieuw = console.input("\n[bold cyan]Opnieuw spelen? Ja = 1, Nee = 0: [/bold cyan]")
 
-        if opnieuw == "0":
-            return balance
+    if opnieuw == "0":
+        return balance
     return balance
+
