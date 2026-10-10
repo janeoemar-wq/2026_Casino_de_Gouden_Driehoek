@@ -1,24 +1,54 @@
-def show_options():                                                                           #functie 1
-    print()
-    print("Kies één van de volgende opties:")
-    print("1. Rood")
-    print("2. Zwart")
-    print("3. Even")
-    print("4. Oneven")
-    print("0. Stop")
-    print()
+"""
+********************     FUNCTIES IN ROULETTE
+spin = (round_number * 7) % 37 gewijzigd spin = random.randint(0, 36)
+import random
+✅ round_number verwijderd
+✅ Rich Table
+print= console.print
+✅ in-text kleuren
+✅ winst/verlies met Rich
+✅ ongeldige keuze getest
+"""
+import random
 
-def get_stake(balance):                                                                       #functie 2
+
+from rich.console import Console
+from rich.table import Table
+from rich.panel import Panel
+console = Console()
+
+
+def show_options():
+    menu = Table(
+        title="🎯 ROULETTE 🎯",
+        border_style="cyan",
+        show_header=False,
+        width=50
+    )
+
+    menu.add_row("[red]1. Rood[/red]")
+    menu.add_row("[white]2. Zwart[/white]")
+    menu.add_row("[cyan]3. Even[/cyan]")
+    menu.add_row("[magenta]4. Oneven[/magenta]")
+    menu.add_row("[yellow]0. Stop[/yellow]")
+
+    console.print(menu)
+
+def get_stake(balance: float) -> float:
     while True:
-        stake = float(input("Hoeveel wil je inzetten? € "))
+        try:
+            stake = float(input("Hoeveel wil je inzetten? € "))
+        except ValueError:
+            console.print("[bold red]Voer een geldig bedrag in.[/bold red]")
+            continue
         if stake <= 0:
-            print("De inzet moet groter zijn dan 0.\n")
+            console.print("[bold red]De inzet moet groter zijn dan 0.[/bold red]")
         elif stake > balance:
-            print("Je hebt niet genoeg saldo voor deze inzet.\n")
+            console.print("[bold red]Je hebt niet genoeg saldo voor deze inzet.[/bold red]")
         else:
             return stake
 
-def has_won(choice, color, odd_even):                             # functie 3
+def has_won(choice, color, odd_even):
     if choice == 1 and color == "rood":
         return True
     elif choice == 2 and color == "zwart":
@@ -29,22 +59,29 @@ def has_won(choice, color, odd_even):                             # functie 3
         return True
     return False
 
-def play_roulette(balance):                                                        #functie : 4
-    round_number = 1
+def play_roulette(balance: float):
+
     while True:
         show_options()
-        choice = int(input("Kies je gok (0 om te stoppen): "))
+        try:
+            choice = int(input("Kies je gok(0 om te stoppen): "))
+        except ValueError:
+            console.print("[bold red]Voer een geldige nummer in van 0 t/m 4.[/bold red]")
+            continue
+
         if choice == 0:
             break
-# BONUS: valideer of de gebruiker een geldige invoer heeft gegeven.
         if choice < 1 or choice > 4:
-            print("Ongeldige keuze, probeer opnieuw.\n")
+            console.print("[bold red]Ongeldige keuze, probeer opnieuw.[/bold red]")
             continue
+
 # Vraag hoeveel de gebruiker wil inzetten en check of dat valide is
+        console.print(type(balance))
         stake = get_stake(balance)
-# Als de inzet valide is, haal dit dan van de balance af.
+# Als de inzet geldig is, haal deze van het saldo af.
+        oud_saldo = balance
         balance -= stake
-        spin = (round_number * 7) % 37
+        spin = random.randint(0,36)
 # Bepaal de kleur
         if spin == 0:
             color = "groen"
@@ -65,15 +102,24 @@ def play_roulette(balance):                                                     
                 odd_even = "oneven"
 # Bereken of de gebruiker gewonnen of verloren heeft.
         win = has_won(choice, color, odd_even)
-# Printout of de gebruiker gewonnen of verloren heeft.
-# Vergeet niet om het rondenummer op te tellen, anders speel je elke ronde hetzelfde spel.
-        print()
-        print(f"De bal valt op {color} ({spin}).")
+
         if win:
             balance += stake * 2
-            print(f"Je wint € {stake:.2f}")
+            resultaat = f"[bold green]Je wint € {stake:.2f}!!![/bold green]"
         else:
-            print(f"Je verliest € {stake:.2f}")
-        round_number += 1
+            resultaat = f"[bold red]Je verliest € {stake:.2f}[/bold red]"
+        console.print(
+            Panel(
+                f"[bold yellow]De bal valt op {color}{spin}).[/bold yellow]\n\n"
+                f"{resultaat}\n\n"
+                f"Huidig saldo: €{oud_saldo:.2f}\n"
+                f"Inzet: €{stake:.2f}\n"
+                f"Resterend saldo: €{balance:.2f}",
+                title="[bold cyan]🎯 Roulette resultaat 🎯[/bold cyan]",
+                border_style="yellow",
+                width=50
+            )
+
+        )
 # Print eindsaldo van de gebruiker
     return balance
