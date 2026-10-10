@@ -40,10 +40,10 @@ TICKET_PRICE = 10.00
 CONSUMPTION_PRICE = 4.50
 GAMBLING_TAX = 2.00
 MIN_AGE = 18
-print()
+console.print()
 
 def main():
-    print("**********     CASINO DE GOUDEN DRIEHOEK dit moet ik nog opleuken    ************")
+    console.print("**********     CASINO DE GOUDEN DRIEHOEK dit moet ik nog opleuken    ************")
 
     total_cost = (
             TICKET_PRICE

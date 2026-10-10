@@ -76,7 +76,7 @@ def play_roulette(balance: float):
             continue
 
 # Vraag hoeveel de gebruiker wil inzetten en check of dat valide is
-        print(type(balance))
+        console.print(type(balance))
         stake = get_stake(balance)
 # Als de inzet geldig is, haal deze van het saldo af.
         oud_saldo = balance

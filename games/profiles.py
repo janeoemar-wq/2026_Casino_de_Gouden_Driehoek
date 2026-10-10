@@ -121,11 +121,11 @@ def initialize_player(total_cost):
             console.print("❌ Onjuist wachtwoord.")
 
             if resterend > 0:
-                print(f"Je hebt nog {resterend} poging(en).")
+                console.print(f"Je hebt nog {resterend} poging(en).")
 
         else:
             profile["geblokkeerd_tot"] = datetime.now() + timedelta(hours=1)
-            print("🔒 Te veel foute pogingen. Account is 1 uur geblokkeerd.")
+            console.print("🔒 Te veel foute pogingen. Account is 1 uur geblokkeerd.")
             return False
 
         salutation = determine_salutation(
@@ -134,9 +134,9 @@ def initialize_player(total_cost):
         )
         balance = profile["saldo"]
 
-        print("\nWelkom terug!")
-        print(f"Welkom {salutation}")
-        print(f"Huidig saldo: €{balance:.2f}")
+        console.print("\nWelkom terug!")
+        console.print(f"Welkom {salutation}")
+        console.print(f"Huidige saldo: €{balance:.2f}")
         return True
 
     else:
@@ -152,19 +152,19 @@ def initialize_player(total_cost):
             profile["gender"]
         )
 
-        print("\nCasino de Gouden Driehoek")
-        print("*" * 27)
-        print(f"Welkom, {salutation}")
-        print()
-        print(f"Startbudget: € {start_balance:.2f}")
-        print(f"Vaste kosten: € {total_cost:.2f}")
-        print(f"Saldo: € {balance:.2f}")
+        console.print("\nCasino de Gouden Driehoek")
+        console.print("*" * 27)
+        console.print(f"Welkom, {salutation}")
+        console.print()
+        console.print(f"Startbudget: € {start_balance:.2f}")
+        console.print(f"Vaste kosten: € {total_cost:.2f}")
+        console.print(f"Saldo: € {balance:.2f}")
         if balance <0:
-            print("⛔ Onvoldoende budget om het casino te betreden.")
-            print(f"Je komt €{-balance:.2f} tekort.")
+            console.print("⛔ Onvoldoende budget om het casino te betreden.")
+            console.print(f"Je komt €{-balance:.2f} tekort.")
             return False
         else:
-            print("Je hebt voldoende budget om het casino te betreden.")
+            console.print("Je hebt voldoende budget om het casino te betreden.")
             return True
 
 def create_account(total_cost, name=None):
@@ -177,7 +177,7 @@ def create_account(total_cost, name=None):
         ).capitalize()
 
         if name in players:
-            print("Dit account bestaat al.")
+            console.print("Dit account bestaat al.")
             return
     birthdate = input(
         "Wat is je geboortedatum? "
