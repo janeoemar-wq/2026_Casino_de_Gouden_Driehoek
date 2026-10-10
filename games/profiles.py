@@ -3,6 +3,11 @@
 from datetime import datetime, timedelta vervangen door from datetime import datetime, timedelta, date
 """
 from datetime import datetime, timedelta, date
+
+from rich.console import Console
+from rich.panel import Panel
+console = Console()
+
 MIN_AGE = 18
 players = {}
 current_player = None
@@ -101,7 +106,7 @@ def initialize_player(total_cost):
         profile = players[current_player]
         if profile["geblokkeerd_tot"] is not None:
             if datetime.now() < profile["geblokkeerd_tot"]:
-                print("🔒 Dit account is tijdelijk geblokkeerd.")
+                console.print("🔒 Dit account is tijdelijk geblokkeerd.")
                 return False
 
         profile["geblokkeerd_tot":] = None
@@ -113,7 +118,7 @@ def initialize_player(total_cost):
                 break
 
             resterend = 2 - poging
-            print("❌ Onjuist wachtwoord.")
+            console.print("❌ Onjuist wachtwoord.")
 
             if resterend > 0:
                 print(f"Je hebt nog {resterend} poging(en).")
@@ -180,11 +185,11 @@ def create_account(total_cost, name=None):
 
     age = get_age(birthdate)
     if age is None:
-        print("❌ Ongeldige geboortedatum. Gebruik dd-mm-jjjj.")
+        console.print("❌ Ongeldige geboortedatum. Gebruik dd-mm-jjjj.")
         return
 
     if not check_age(age):
-        print("⛔  🔞  Je moet 18 jaar of ouder zijn. 🔞  ⛔")
+        console.print("⛔  🔞  Je moet 18 jaar of ouder zijn. 🔞  ⛔")
         return
     gender = input(
         "Wat is je gender? (m/v/x) "
@@ -207,7 +212,7 @@ def create_account(total_cost, name=None):
 
     current_player = name
 
-    print(f"Account voor {name} aangemaakt.")
+    console.print(f"Account voor {name} aangemaakt.")
 
 def get_current_balance():# HELPERFUNCTIE
     return players[current_player]["saldo"]
@@ -229,13 +234,18 @@ def show_account():
 
     profile = players[current_player]
 
-    print("\nCasino de Gouden Driehoek")
-    print("-------------------------")
+    console.print(
+        Panel(
+        "Accountoverzicht",
+        title = "CASINO DE GOUDEN DRIEHOEK",
+        width = 50
+        )
+    )
 
-    print(f"Speler: {profile['naam']}")
-    print(f"Saldo: €{profile['saldo']:.2f}")
+    console.print(f"Speler: {profile['naam']}")
+    console.print(f"Saldo: €{profile['saldo']:.2f}")
 
-    print("\nGespeelde spellen:")
+    console.print("\nGespeelde spellen:")
 
     if profile["gespeelde_spellen"]:
 
@@ -243,23 +253,23 @@ def show_account():
         "gespeelde_spellen"
         ].items():
 
-            print(
+            console.print(
                 f"- {game}: {amount} keer"
-    )
+            )
 
     else:
-        print("Nog geen spellen gespeeld")
+        console.print("Nog geen spellen gespeeld")
 
-    print("\nBeschikbare spelers:")
-    print(list(players.keys()))
+    console.print("\nBeschikbare spelers:")
+    console.print(list(players.keys()))
 
 def show_all_players():
 
-    print("\nAlle spelers")
+    console.print("\nAlle spelers")
 
     for name, profile in players.items(): #verwijst naar de sleutel-waardeparen van de dictionary players
 
-        print(
+        console.print(
             f"- {name}: €{profile['saldo']:.2f}"
 )
 def switch_account():
@@ -270,19 +280,19 @@ def switch_account():
     ).capitalize()
 
     if name not in players:
-        print("❌ Dit account bestaat niet.")
+        console.print("❌ Dit account bestaat niet.")
         return
     profile = players[name]
 
     password = input("Voer het wachtwoord van dit account in: ")
 
     if password != profile["wachtwoord"]:
-        print("❌ Onjuist wachtwoord. Account niet gewisseld.")
+        console.print("❌ Onjuist wachtwoord. Account niet gewisseld.")
         return
 
     current_player = name
 
-    print(f"Ingelogd als {name}")
+    console.print(f"Ingelogd als {name}")
 
 
 def remove_account():
@@ -293,11 +303,11 @@ def remove_account():
     ).capitalize()
 
     if name not in players:
-        print("Dit account bestaat niet.")
+        console.print("Dit account bestaat niet.")
         return False
 
     if len(players) == 1:
-        print(
+        console.print(
             "Laatste account mag niet verwijderd worden."
     )
         return False
@@ -306,11 +316,11 @@ def remove_account():
 
     if name == current_player:
         current_player = None
-        print("Account verwijderd.")
-        print("🔒 Je bent uitgelogd.")
+        console.print("Account verwijderd.")
+        console.print("🔒 Je bent uitgelogd.")
         return True #de huidige gebruiker is verwijderd, opnieuw inloggen
 
-    print("Account verwijderd.")
+    console.print("Account verwijderd.")
     return False #  bv:Als ik Frank verwijder terwijl Jane actief nog is.
     # huidige speler blijft gewoon in het accountmenu.
 
