@@ -19,6 +19,11 @@ from rich.console import Console
 from rich.panel import Panel
 from rich.table import Table
 from rich import box
+from rich.align import Align
+from rich.panel import Panel
+
+from pyfiglet import Figlet
+figlet = Figlet(font="small")
 
 from fruitmachine import start
 from roulette import play_roulette
@@ -43,7 +48,18 @@ MIN_AGE = 18
 console.print()
 
 def main():
-    console.print("**********     CASINO DE GOUDEN DRIEHOEK dit moet ik nog opleuken    ************")
+    console.print(
+        Panel(
+            Align.center(
+                "[bold bright_yellow][/bold bright_yellow]\n"
+                "[bold bright_yellow]CASINO DE GOUDEN DRIEHOEK[/bold bright_yellow]"
+            ),
+            border_style="bright_yellow",
+            box=box.DOUBLE,
+            width=70
+        ),
+        justify="center"
+    )
 
     total_cost = (
             TICKET_PRICE
@@ -69,19 +85,29 @@ def main():
 
 def show_main_menu():
     while True:
-        menu = Table(
-            title="[yellow]HOOFDMENU[/yellow]",
-            border_style="yellow",
-            show_header=False,
-            width=50,
-            box = box.DOUBLE
-        )
-        menu.add_row("[blue]1. Spellen[/blue]")
-        menu.add_row("[magenta]2. Saldo[/magenta]")
-        menu.add_row("[cyan]3. Account[/cyan]")
-        menu.add_row("[red]0. Stop[/red]")
-        console.print(menu)
+        menu_table = Table(
+        show_header=True,
+        box=box.DOUBLE,
+        width=50
+    )
 
+        menu_table.add_column("Optie")
+        menu_table.add_column("Actie")
+
+        menu_table.add_row("1", "Spellen")
+        menu_table.add_row("2", "Saldo")
+        menu_table.add_row("3", "Account")
+        menu_table.add_row("0", "Stop")
+
+        console.print(
+            Panel(
+                menu_table,
+                title="[bold bright_yellow]CASINO DE GOUDEN DRIEHOEK - HOOFDMENU[/bold bright_yellow]",
+                border_style="bright_yellow",
+                width=60,
+            ),
+            justify="center"
+        )
         keuze = input("Maak een keuze: ")
 
         match keuze:
@@ -96,7 +122,6 @@ def show_main_menu():
                     return True
             case "0":
                 console.print("[bold red]Programma wordt afgesloten...[/bold red]")
-
                 break
             case _:
                 console.print("[bold red]Ongeldige keuze, probeer opnieuw.[/bold red]")
@@ -115,10 +140,11 @@ def show_games_menu():
         console.print(
             Panel(
                 menu,
-                title= "[bold yellow]🎰 SPELLEN MENU 🎰[/bold yellow]",
-                border_style="yellow",
+                title="[bold bright_yellow]SPELLENMENU[/bold bright_yellow]",
+                border_style="bright_yellow",
                 width=60
-            )
+            ),
+            justify="center"
         )
 
 
@@ -151,11 +177,12 @@ def show_games_menu():
 def show_balance(balance):
     console.print(
         Panel(
-            f"\n[bold green]Je huidige 💰 SALDO 💰is: €{balance:.2f}[bold green]",
+            f"\n[bold green]Je huidige 💰 SALDO 💰is: €{balance:.2f}[/bold green]",
             title="[bold yellow] saldo [/bold yellow]",
             border_style="green",
             width=50
-        )
+        ),
+        justify="center"
     )
 
 def show_account_menu():

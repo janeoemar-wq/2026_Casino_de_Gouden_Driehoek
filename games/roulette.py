@@ -21,9 +21,9 @@ console = Console()
 def show_options():
     menu = Table(
         title="🎯 ROULETTE 🎯",
-        border_style="cyan",
         show_header=False,
-        width=50
+        width=50,
+        box=None
     )
 
     menu.add_row("[red]1. Rood[/red]")
@@ -32,7 +32,15 @@ def show_options():
     menu.add_row("[magenta]4. Oneven[/magenta]")
     menu.add_row("[yellow]0. Stop[/yellow]")
 
-    console.print(menu)
+    console.print(
+        Panel(
+            menu,
+            title="[bold yellow]🎯 ROULETTE 🎯[/bold yellow]",
+            border_style="yellow",
+            width=60
+        ),
+        justify="center"
+    )
 
 def get_stake(balance: float) -> float:
     while True:
@@ -76,7 +84,7 @@ def play_roulette(balance: float):
             continue
 
 # Vraag hoeveel de gebruiker wil inzetten en check of dat valide is
-        console.print(type(balance))
+
         stake = get_stake(balance)
 # Als de inzet geldig is, haal deze van het saldo af.
         oud_saldo = balance
@@ -115,11 +123,11 @@ def play_roulette(balance: float):
                 f"Huidig saldo: €{oud_saldo:.2f}\n"
                 f"Inzet: €{stake:.2f}\n"
                 f"Resterend saldo: €{balance:.2f}",
-                title="[bold cyan]🎯 Roulette resultaat 🎯[/bold cyan]",
+                title="[bold white]🎯 Roulette resultaat 🎯[/bold white]",
                 border_style="yellow",
                 width=50
-            )
-
+            ),
+            justify="center"
         )
 # Print eindsaldo van de gebruiker
     return balance

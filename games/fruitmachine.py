@@ -16,7 +16,6 @@ import random
 from rich.console import Console
 from rich.table import Table
 from rich.panel import Panel
-from wcwidth import width
 
 console = Console()
 
@@ -39,7 +38,7 @@ def determine_payout(rol1, rol2, rol3, inzet):
         return 0
 
 def start(balance):
-    winregels_tabel = Table(title="🎰 Winregels Fruitmachine 🎰", style="bold, width=50")
+    winregels_tabel = Table(style="bold")
     winregels_tabel.add_column("Prijs", style="bold")
     winregels_tabel.add_column("Voorbeelden", style="bold")
 
@@ -56,15 +55,23 @@ def start(balance):
         "🍒🍋⭐"
     )
 
-    console.print(winregels_tabel)
     while True:
         balance = play_fruitmachine(balance)
         if balance <= 0:
             console.print("Je saldo is op.")
             break
-        opnieuw = input("Nog een keer spelen? (ja/nee): ")
-        if opnieuw.lower() == "nee":
-            break
+        while True:
+            opnieuw = input("Nog een keer spelen? (ja/nee): ").lower()
+
+            if opnieuw == "ja":
+                break
+
+            if opnieuw == "nee":
+                return balance
+
+            console.print(
+                "[bold red]Typ alleen ja of nee.[/bold red]"
+            )
 
     return balance
 
@@ -81,7 +88,12 @@ emojij_symbolen = {
 
 def play_fruitmachine(balance: float):
     console.print(f"Je huidige saldo is €{balance:.2f}")
-    inzet = float(input("Wat wil je inzetten? €"))
+    while True:
+        try:
+            inzet = float(input("Wat wil je inzetten? €"))
+            break
+        except ValueError:
+            console.print("[bold red]Voer een geldig bedrag in.[/bold red]")
 # inzet valideren
     if inzet <= 0:
         console.print("Inzet moet hoger zijn dan 0.")
@@ -96,13 +108,25 @@ def play_fruitmachine(balance: float):
 
 # rollen draaien
     rol1, rol2, rol3 = determine_rolls()
-    rollen_tabel = Table(show_header=False, width=50)
+    rollen_tabel = Table(
+        show_header=False,
+        width=50,
+        border_style="yellow"
+    )
     rollen_tabel.add_row(
         f"{emojij_symbolen[rol1]} {rol1}",
         f"{emojij_symbolen[rol2]} {rol2}",
         f"{emojij_symbolen[rol3]} {rol3}",
     )
-    console.print(rollen_tabel)
+    console.print(
+        Panel(
+            rollen_tabel,
+            title="[bold yellow]🎰 ROLLEN 🎰[/bold yellow]",
+            border_style="yellow",
+            width=60
+        ),
+        justify="center"
+    )
 
     payout = determine_payout(rol1, rol2, rol3, inzet)
     if payout > 0:
@@ -124,7 +148,8 @@ def play_fruitmachine(balance: float):
             title="[bold yellow]🎰 Resultaat 🎰[/bold yellow]",
             border_style="yellow",
             width=50
-        )
+        ),
+        justify="center"
     )
 
     return balance
