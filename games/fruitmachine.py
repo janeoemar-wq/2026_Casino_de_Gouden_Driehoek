@@ -1,15 +1,16 @@
 """
-prints= console.print
+Table toevoegen standaard format als alle ander spellen
+print vervangen door console.print
 imports rich
 bij def start de win regels omgezet naar table
 Resterend saldo toegevoegd
-resultaat in een Panel
 winregels in een Table
 rollen in een Table
 Rich markup in diverse regels
 vaste width=50
 meerdere rondes achter elkaar , hersteld
 random.choice() met 8 symbolen, geen round_number
+consitent is kleuren in spellen
 
 """
 import random
@@ -105,7 +106,6 @@ def play_fruitmachine(balance: float):
     oud_saldo = balance  #saldo vóór de inzet bewaren
     balance -= inzet
 
-
 # rollen draaien
     rol1, rol2, rol3 = determine_rolls()
     rollen_tabel = Table(
@@ -145,7 +145,7 @@ def play_fruitmachine(balance: float):
             f"Huidig saldo: €{oud_saldo:.2f}\n"  
             f"Inzet: €{inzet:.2f}\n" 
             f"Resterend saldo: €{balance:.2f}",
-            title="[bold yellow]🎰 Resultaat 🎰[/bold yellow]",
+            title="[bold yellow]RESULTAAT[/bold yellow]",
             border_style="yellow",
             width=50
         ),

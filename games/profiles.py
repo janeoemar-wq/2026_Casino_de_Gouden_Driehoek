@@ -3,7 +3,6 @@
 from datetime import datetime, timedelta vervangen door from datetime import datetime, timedelta, date
 """
 from datetime import datetime, timedelta, date
-
 from rich.console import Console
 from rich.panel import Panel
 console = Console()

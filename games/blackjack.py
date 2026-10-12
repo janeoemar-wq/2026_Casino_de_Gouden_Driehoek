@@ -1,16 +1,16 @@
 """
+Table toevoegen standaard format als alle ander spellen
+consitent is kleuren in spellen
 print vervangen door console.print
 huidige saldo vervangen
 """
 import random
-
 from rich.console import Console
 from rich.panel import Panel
 console = Console()
 
 SUITS = ["♠", "♥", "♦", "♣"]
 RANKS = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]
-
 
 def create_deck():
     deck = [f"{suit}{rank}" for suit in SUITS for rank in RANKS]
@@ -45,10 +45,6 @@ def show_hand(label, hand, hide_card=False):
         ),
         justify="center"
     )
-
-
-
-
 def calculate_card_value(card):
     rank = card[1:]
 
@@ -78,7 +74,6 @@ def play_blackjack(balance:float):
     console.print(
         Panel(
             "[bold yellow]♠ ♥ ♦ ♣ BLACKJACK ♠ ♥ ♦ ♣[/bold yellow]",
-            title="[bold yellow]CASINO DE GOUDEN DRIEHOEK[/bold yellow]",
             border_style="yellow",
             width=50
         ),
@@ -137,7 +132,7 @@ def play_blackjack(balance:float):
                     f"Huidig saldo: €{balance + bet:.2f}\n"
                     f"Inzet: €{bet:.2f}\n"
                     f"Resterend saldo: €{balance:.2f}",
-                    title="[bold yellow]OUTPUT[/bold yellow]",
+                    title="[bold yellow]RESULTAAT[/bold yellow]",
                     border_style="red",
                     width=50
                 ),
@@ -186,112 +181,60 @@ def play_blackjack(balance:float):
             balance += bet * 2
 
             console.print(
-
                 Panel(
-
                     f"[bold green]Dealer bust! Je wint.[/bold green]\n\n"
-
                     f"Huidig saldo: €{oud_saldo:.2f}\n"
-
                     f"Inzet: €{bet:.2f}\n"
-
                     f"Resterend saldo: €{balance:.2f}",
-
-                    title="[bold yellow]OUTPUT[/bold yellow]",
-
+                    title="[bold yellow]RESULTAAT[/bold yellow]",
                     border_style="green",
-
                     width=50
-
                 ),
-
                 justify="center"
-
             )
-
 
         elif player_total > dealer_total:
-
             balance += bet * 2
-
             console.print(
-
                 Panel(
-
                     f"[bold green]Je wint van de dealer![/bold green]\n\n"
-
                     f"Huidig saldo: €{oud_saldo:.2f}\n"
-
                     f"Inzet: €{bet:.2f}\n"
-
                     f"Resterend saldo: €{balance:.2f}",
-
                     title="[bold yellow]OUTPUT[/bold yellow]",
-
                     border_style="green",
-
                     width=50
-
                 ),
-
                 justify="center"
-
             )
-
 
         elif player_total == dealer_total:
-
             balance += bet
-
             console.print(
-
                 Panel(
-
                     f"[bold yellow]Gelijkspel.[/bold yellow]\n\n"
-
                     f"Huidig saldo: €{oud_saldo:.2f}\n"
-
                     f"Inzet: €{bet:.2f}\n"
-
                     f"Resterend saldo: €{balance:.2f}",
-
                     title="[bold yellow]OUTPUT[/bold yellow]",
-
                     border_style="yellow",
-
                     width=50
-
                 ),
-
                 justify="center"
-
             )
 
-
         else:
-
             console.print(
-
                 Panel(
-
                     f"[bold red]Dealer wint.[/bold red]\n\n"
-
                     f"Huidig saldo: €{oud_saldo:.2f}\n"
-
                     f"Inzet: €{bet:.2f}\n"
-
                     f"Resterend saldo: €{balance:.2f}",
-
-                    title="[bold yellow]OUTPUT[/bold yellow]",
-
+                    title="[bold red]RESULTAAT[/bold red]",
                     border_style="red",
-
                     width=50
-
                 ),
-
                 justify="center"
-
             )
         opnieuw = console.input("\n[bold white]Opnieuw spelen? Ja = 1, Nee = 0: [/bold white]")
 

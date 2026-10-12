@@ -1,29 +1,15 @@
 """
 installatie rich en imports
-
-Console
-Panel
-in-text markup
-🟡 Table toevoegen
-🟡 Print() nog omzetten
-✅  verrverwijderd
-⏳ hoofdmenu naar Rich
-⏳ accountmenu naar Rich
-🟢 STANDAARD OPMAAK: 🟡 Geel voor titels/ 🔵 Cyan voor informatie
-🎰 Fruitmachine: gele rand/🎯 Roulette: cyan rand/ blackjack.... rand/🟢 Winst/succes: groen/🔴 Verlies/fout: rood/
-Alle Panel/Table: width=50/ 🟣Magenta kan bijvoorbeeld voor een andere menuoptie:
+Table toevoegen standaard format als alle ander spellen
+consitent is kleuren in spellen
 
 """
 
 from rich.console import Console
-from rich.panel import Panel
 from rich.table import Table
 from rich import box
 from rich.align import Align
 from rich.panel import Panel
-
-from pyfiglet import Figlet
-figlet = Figlet(font="small")
 
 from fruitmachine import start
 from roulette import play_roulette
@@ -70,7 +56,6 @@ def main():
     toegang = initialize_player(total_cost)
     if toegang is False:
         return
-
 
     while True:
         opnieuw_inloggen = show_main_menu()

@@ -1,26 +1,24 @@
 """
 ********************     FUNCTIES IN ROULETTE
+Table toevoegen standaard format als alle ander spellen
+print vervangen door console.print
 spin = (round_number * 7) % 37 gewijzigd spin = random.randint(0, 36)
 import random
-✅ round_number verwijderd
-✅ Rich Table
-print= console.print
-✅ in-text kleuren
-✅ winst/verlies met Rich
-✅ ongeldige keuze getest
+round_number verwijderd
+Rich Table
+consitent is kleuren in spellen
+in-text kleuren
+winst/verlies met Rich
+ongeldige keuze getest
 """
 import random
-
-
 from rich.console import Console
 from rich.table import Table
 from rich.panel import Panel
 console = Console()
 
-
 def show_options():
     menu = Table(
-        title="🎯 ROULETTE 🎯",
         show_header=False,
         width=50,
         box=None
@@ -83,14 +81,11 @@ def play_roulette(balance: float):
             console.print("[bold red]Ongeldige keuze, probeer opnieuw.[/bold red]")
             continue
 
-# Vraag hoeveel de gebruiker wil inzetten en check of dat valide is
-
         stake = get_stake(balance)
-# Als de inzet geldig is, haal deze van het saldo af.
         oud_saldo = balance
         balance -= stake
         spin = random.randint(0,36)
-# Bepaal de kleur
+
         if spin == 0:
             color = "groen"
             odd_even = "geen"
@@ -108,7 +103,7 @@ def play_roulette(balance: float):
             else:
                 color = "zwart"
                 odd_even = "oneven"
-# Bereken of de gebruiker gewonnen of verloren heeft.
+
         win = has_won(choice, color, odd_even)
 
         if win:
@@ -123,7 +118,7 @@ def play_roulette(balance: float):
                 f"Huidig saldo: €{oud_saldo:.2f}\n"
                 f"Inzet: €{stake:.2f}\n"
                 f"Resterend saldo: €{balance:.2f}",
-                title="[bold white]🎯 Roulette resultaat 🎯[/bold white]",
+                title="[bold white]RESULTAAT[/bold white]",
                 border_style="yellow",
                 width=50
             ),
