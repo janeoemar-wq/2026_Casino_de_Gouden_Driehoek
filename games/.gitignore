@@ -1,2 +1,3 @@
 ./.idea
-./.testen_oud
+__pycache__/
+*.pyc
