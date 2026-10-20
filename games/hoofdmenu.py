@@ -1,9 +1,3 @@
-"""
-installatie rich en imports
-Table toevoegen standaard format als alle ander spellen
-consitent is kleuren in spellen
-
-"""
 
 from rich.console import Console
 from rich.table import Table
@@ -25,6 +19,7 @@ from profiles import (
     update_current_balance,
     register_played_game
 )
+from exchange import run_exchange # toegevoegd voor week 7 zie exchange.py
 console = Console()
 
 TICKET_PRICE = 10.00
@@ -82,6 +77,7 @@ def show_main_menu():
         menu_table.add_row("1", "Spellen")
         menu_table.add_row("2", "Saldo")
         menu_table.add_row("3", "Account")
+        menu_table.add_row("4", "Wisselkantoor") # toegevoegd voor week 7
         menu_table.add_row("0", "Stop")
 
         console.print(
@@ -89,7 +85,7 @@ def show_main_menu():
                 menu_table,
                 title="[bold bright_yellow]CASINO DE GOUDEN DRIEHOEK - HOOFDMENU[/bold bright_yellow]",
                 border_style="bright_yellow",
-                width=60,
+                width=55,
             ),
             justify="center"
         )
@@ -105,6 +101,15 @@ def show_main_menu():
                 uitgelogd = show_account_menu()
                 if uitgelogd:
                     return True
+            case "4":
+                euro_amount = run_exchange()
+
+                if euro_amount is not None:
+                    balance = get_current_balance()
+
+                    balance += euro_amount
+
+                    update_current_balance(balance)
             case "0":
                 console.print("[bold red]Programma wordt afgesloten...[/bold red]")
                 break
@@ -163,7 +168,7 @@ def show_balance(balance):
     console.print(
         Panel(
             f"\n[bold green]Je huidige 💰 SALDO 💰is: €{balance:.2f}[/bold green]",
-            title="[bold yellow] saldo [/bold yellow]",
+            title="[bold]CASINO DE GOUDEN DRIEHOEK[/bold]",
             border_style="green",
             width=50
         ),
@@ -175,7 +180,7 @@ def show_account_menu():
         show_account()
         account_menu =Table(
             title="👤 ACCOUNTMENU 👤",
-            border_style="yellow",
+            border_style="bright_yellow",
             show_header = False,
             width = 50,
             box = box.DOUBLE
@@ -185,7 +190,7 @@ def show_account_menu():
         account_menu.add_row("[magenta]3. Wissel account[/magenta]")
         account_menu.add_row("[green]4. Verwijder account[/green]")
         account_menu.add_row("[red]0. Terug[/red]")
-        console.print(account_menu)
+        console.print(account_menu, justify="center")
 
         keuze = input("Keuze: ")
 

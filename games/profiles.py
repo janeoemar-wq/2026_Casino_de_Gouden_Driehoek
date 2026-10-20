@@ -133,9 +133,9 @@ def initialize_player(total_cost):
         )
         balance = profile["saldo"]
 
-        console.print("\nWelkom terug!")
-        console.print(f"Welkom {salutation}")
-        console.print(f"Huidige saldo: €{balance:.2f}")
+        console.print(Panel(f"Welkom terug!\nWelkom {salutation}\n\nHuidige saldo: €{balance:.2f}",
+                            title="[bold]CASINO DE GOUDEN DRIEHOEK[/bold]", border_style="bright_yellow", width=50),
+                      justify="center")
         return True
 
     else:
@@ -151,20 +151,22 @@ def initialize_player(total_cost):
             profile["gender"]
         )
 
-        console.print("\nCasino de Gouden Driehoek")
-        console.print("*" * 27)
-        console.print(f"Welkom, {salutation}")
-        console.print()
-        console.print(f"Startbudget: € {start_balance:.2f}")
-        console.print(f"Vaste kosten: € {total_cost:.2f}")
-        console.print(f"Saldo: € {balance:.2f}")
-        if balance <0:
-            console.print("⛔ Onvoldoende budget om het casino te betreden.")
-            console.print(f"Je komt €{-balance:.2f} tekort.")
-            return False
-        else:
-            console.print("Je hebt voldoende budget om het casino te betreden.")
-            return True
+        console.print(
+            Panel(
+                f"""Welkom, {salutation}
+
+        Startbudget: € {start_balance:.2f}
+        Vaste kosten: € {total_cost:.2f}
+        Saldo: € {balance:.2f}
+
+        Je hebt voldoende budget om het casino te betreden.""",
+                title="CASINO DE GOUDEN DRIEHOEK",
+                border_style="bright_yellow",
+                expand=False,
+            ),
+            justify="center"
+        )
+        return True
 
 def create_account(total_cost, name=None):
     global players
@@ -178,14 +180,15 @@ def create_account(total_cost, name=None):
         if name in players:
             console.print("Dit account bestaat al.")
             return
-    birthdate = input(
-        "Wat is je geboortedatum? "
-    )
+    while True:
+        birthdate = input("Wat is je geboortedatum? ")
 
-    age = get_age(birthdate)
-    if age is None:
+        age = get_age(birthdate)
+
+        if age is not None:
+            break
+
         console.print("❌ Ongeldige geboortedatum. Gebruik dd-mm-jjjj.")
-        return
 
     if not check_age(age):
         console.print("⛔  🔞  Je moet 18 jaar of ouder zijn. 🔞  ⛔")
@@ -230,19 +233,16 @@ def register_played_game(game_name):
         played_games[game_name] = 1
 
 def show_account():
-
     profile = players[current_player]
-
     console.print(
         Panel(
-        "Accountoverzicht",
-        title = "CASINO DE GOUDEN DRIEHOEK",
-        width = 50
-        )
+            f"Accountoverzicht\n\nSpeler: {profile['naam']}\nSaldo: €{profile['saldo']:.2f}",
+            title="[bold]CASINO DE GOUDEN DRIEHOEK[/bold]",
+            border_style="bright_yellow",
+            width=50
+        ),
+        justify="center"
     )
-
-    console.print(f"Speler: {profile['naam']}")
-    console.print(f"Saldo: €{profile['saldo']:.2f}")
 
     console.print("\nGespeelde spellen:")
 

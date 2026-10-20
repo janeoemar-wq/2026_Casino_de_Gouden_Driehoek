@@ -111,7 +111,7 @@ def play_fruitmachine(balance: float):
     rollen_tabel = Table(
         show_header=False,
         width=50,
-        border_style="yellow"
+        border_style="bright_yellow"
     )
     rollen_tabel.add_row(
         f"{emojij_symbolen[rol1]} {rol1}",
@@ -122,7 +122,7 @@ def play_fruitmachine(balance: float):
         Panel(
             rollen_tabel,
             title="[bold yellow]🎰 ROLLEN 🎰[/bold yellow]",
-            border_style="yellow",
+            border_style="bright_yellow",
             width=60
         ),
         justify="center"
@@ -146,7 +146,7 @@ def play_fruitmachine(balance: float):
             f"Inzet: €{inzet:.2f}\n" 
             f"Resterend saldo: €{balance:.2f}",
             title="[bold yellow]RESULTAAT[/bold yellow]",
-            border_style="yellow",
+            border_style="bright_yellow",
             width=50
         ),
         justify="center"
