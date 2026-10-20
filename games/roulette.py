@@ -34,7 +34,7 @@ def show_options():
         Panel(
             menu,
             title="[bold yellow]🎯 ROULETTE 🎯[/bold yellow]",
-            border_style="yellow",
+            border_style="bright_yellow",
             width=60
         ),
         justify="center"
@@ -119,7 +119,7 @@ def play_roulette(balance: float):
                 f"Inzet: €{stake:.2f}\n"
                 f"Resterend saldo: €{balance:.2f}",
                 title="[bold white]RESULTAAT[/bold white]",
-                border_style="yellow",
+                border_style="bright_yellow",
                 width=50
             ),
             justify="center"

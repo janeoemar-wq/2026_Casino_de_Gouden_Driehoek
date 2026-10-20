@@ -1,5 +1,5 @@
 """
-Table toevoegen standaard format als alle ander spellen
+Table toevoegen standaard format als alle andere spellen
 consitent is kleuren in spellen
 print vervangen door console.print
 huidige saldo vervangen
@@ -40,7 +40,7 @@ def show_hand(label, hand, hide_card=False):
         Panel(
             inhoud,
             title=f"[bold white]{label}[/bold white]",
-            border_style="yellow",
+            border_style="bright_yellow",
             width=50
         ),
         justify="center"
@@ -74,7 +74,7 @@ def play_blackjack(balance:float):
     console.print(
         Panel(
             "[bold yellow]♠ ♥ ♦ ♣ BLACKJACK ♠ ♥ ♦ ♣[/bold yellow]",
-            border_style="yellow",
+            border_style="bright_yellow",
             width=50
         ),
         justify="center"
@@ -217,7 +217,7 @@ def play_blackjack(balance:float):
                     f"Inzet: €{bet:.2f}\n"
                     f"Resterend saldo: €{balance:.2f}",
                     title="[bold yellow]OUTPUT[/bold yellow]",
-                    border_style="yellow",
+                    border_style="bright_yellow",
                     width=50
                 ),
                 justify="center"

@@ -1,3 +1,10 @@
 .idea/
-Hoofdmenu test.py
-Profiles test.py
+__pycache__/
+*.pyc
+
+# Voor week 7 heb ik een .env-bestand aangemaakt.
+# Hierin staat mijn API-key voor het wisselkantoor (ExchangeRate API).
+# Het .env-bestand staat in .gitignore zodat de API-key niet naar GitHub wordt geüpload.
+
+.env
+.venv/
